@@ -1,0 +1,62 @@
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #d8d8d8;
+  font-size: 30px;
+  background-image: url("./tile.png");
+  margin: 0;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 7vh;
+  margin-top: 25%;
+}
+
+ul {
+  padding-left: 0;
+}
+
+.content {
+  width: 50%;
+  margin: auto;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding-bottom: 30px;
+  max-width: 100%;
+  margin: auto;
+}
+
+li {
+  text-align: left;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+a,
+button {
+  font-family: "Source Sans Pro", sans-serif;
+  background: none;
+  border: none;
+  font-size: 38px;
+  text-decoration: none;
+  color: darkorange;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  width: max-content;
+}
+
+a:hover,
+button:hover,
+a:focus-visible,
+button:focus-visible,
+.underline {
+  text-decoration: underline;
+  outline-offset: 0;
+  outline: none;
+}
