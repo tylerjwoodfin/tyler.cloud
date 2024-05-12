@@ -60,3 +60,29 @@ button:focus-visible,
   outline-offset: 0;
   outline: none;
 }
+
+/* about */
+.about-section {
+  opacity: 1;
+  transition: opacity 200ms ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+/* icons on hover */
+.link-with-icon a {
+  position: relative;
+}
+
+.link-with-icon a .icon {
+  margin-left: 10px;
+  opacity: 0;
+  position: absolute;
+  height: 50%;
+}
+
+.link-with-icon a:hover .icon {
+  opacity: 1;
+}
