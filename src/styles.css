@@ -15,6 +15,7 @@ h1 {
 }
 
 h3 {
+  margin-top: 0px;
   font-weight: 300;
 }
 
@@ -53,6 +54,7 @@ li {
   padding-bottom: 15px;
   display: flex;
   flex-direction: column;
+  text-wrap: wrap;
 }
 
 a,
@@ -66,7 +68,6 @@ button {
   cursor: pointer;
   padding: 0;
   text-align: left;
-  width: max-content;
 }
 
 a:hover,
@@ -82,7 +83,7 @@ button:focus-visible,
 /* about */
 .about-section {
   opacity: 1;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 .hidden {
@@ -118,11 +119,26 @@ button:focus-visible,
   margin-bottom: 15px;
   opacity: 0;
   visibility: hidden; 
-  transition: opacity 300ms, visibility 0s 300ms;
+  transition: opacity 500ms, ease-in-out visibility 0s 500ms;
 }
 
 .latest.show {
   opacity: 1;
   visibility: visible;
-  transition: opacity 300ms;
+  transition: opacity ease-in-out 500ms;
+}
+
+.face {
+  display: flex;
+  border-radius: 12px;
+  image-orientation: from-image;
+  box-shadow: -14px 21px 28px -2px rgba(135, 135, 135, 0.34);
+  width: min(400px, 80%);
+  height: auto;
+  margin: 30px;
+  margin-bottom: 15%;
+}
+
+.description {
+  margin-top: 0px;
 }

@@ -9,10 +9,10 @@ const AboutSection = () => {
   const toggleVisibility = () => {
     if (isVisible) {
       setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 100);
+      setTimeout(() => setShouldRender(false), 0);
     } else {
       setShouldRender(true);
-      setTimeout(() => setIsVisible(true), 100);
+      setTimeout(() => setIsVisible(true), 0);
     }
   };
 
@@ -31,16 +31,18 @@ const AboutSection = () => {
         <div className={`about ${isVisible ? "show" : ""}`}>
           <div
             className={`about-section ${isVisible ? "visible" : "hidden"}`}
-            style={{ transition: "opacity 100ms" }}
+            style={{ transition: "opacity 500ms ease-in-out" }}
           >
+            <img id="about-img" className="face" src="img/face.jpg" />
             <h3>I'm a full-stack software engineer in San Francisco.</h3>
             <p>
               I've progressed quickly in my career at Apiture, where I lead a
-              React Native team. I spend quite a bit of time with Angular, React
-              Native, and Python.
+              React Native engineering team. I spend quite a bit of time with
+              Angular, Python, and React Native (always with TypeScript!). I'm
+              always trying to find something else to learn.
             </p>
             <p>
-              Previously at Oracle, I transitioned from Associate Consultant to
+              Previously, at Oracle, I transitioned from Associate Consultant to
               Cloud Engineer, taking on client-facing demos and managing
               significant projects, like developing websites and tracking
               systems for nonprofits.

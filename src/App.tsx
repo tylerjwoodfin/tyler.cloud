@@ -2,8 +2,8 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.css";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import LatestSection from "./LatestSection";
-import AboutSection from "./AboutSection";
+import SubmenuComponent from "./SubmenuComponent";
+import AboutSection from "./AboutComponent";
 
 const App: React.FC = () => {
   return (
@@ -11,10 +11,8 @@ const App: React.FC = () => {
       <h1>Hi, I'm Tyler Woodfin.</h1>
       <ul className="links">
         <AboutSection></AboutSection>
-        <LatestSection></LatestSection>
-        <li>
-          <a href="#">older stuff</a>
-        </li>
+        <SubmenuComponent title="latest side projects"></SubmenuComponent>
+        <SubmenuComponent title="older stuff" customLinks={olderStuffLinks} />
         <li className="link-with-icon">
           <a
             href="https://github.com/tylerjwoodfin"
@@ -48,5 +46,20 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+const olderStuffLinks = [
+  {
+    id: "1",
+    url: "/rundino",
+    name: "run, dino",
+    description: "an addictive and hilarious web-based dodging game",
+  },
+  {
+    id: "2",
+    url: "/tpn",
+    name: "my website from middle school",
+    description: "built in 6th grade; proceed at your own risk.",
+  },
+];
 
 export default App;
