@@ -2,14 +2,25 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   color: #d8d8d8;
   font-size: 30px;
-  background-image: url("./tile.png");
+  background-color: #1a1a1a;
+  background-image: url("tile.png");
   margin: 0;
 }
 
+/* fonts */
 h1 {
   font-weight: 300;
   font-size: 7vh;
   margin-top: 25%;
+}
+
+h3 {
+  font-weight: 300;
+}
+
+p {
+  font-weight: 400;
+  font-size: 0.9em;
 }
 
 ul {
@@ -18,7 +29,14 @@ ul {
 
 .content {
   width: 50%;
+  max-width: 600px;
   margin: auto;
+}
+
+@media (max-width: 768px) {
+  .content {
+    width: 80%;
+  }
 }
 
 .links {
@@ -64,25 +82,47 @@ button:focus-visible,
 /* about */
 .about-section {
   opacity: 1;
-  transition: opacity 200ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
 }
 
 .hidden {
   opacity: 0;
+  visibility: hidden;
 }
 
-/* icons on hover */
-.link-with-icon a {
-  position: relative;
+.icon.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.icon.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .link-with-icon a .icon {
   margin-left: 10px;
-  opacity: 0;
   position: absolute;
-  height: 50%;
+  height: 1.5vh;
 }
 
-.link-with-icon a:hover .icon {
+.link-with-icon a:hover .icon, .link-with-icon a:hover .icon {
   opacity: 1;
+  visibility: visible;
+}
+
+.latest {
+  display: flex;
+  flex-direction: column;
+  margin-left: 35px;
+  margin-bottom: 15px;
+  opacity: 0;
+  visibility: hidden; 
+  transition: opacity 300ms, visibility 0s 300ms;
+}
+
+.latest.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 300ms;
 }
