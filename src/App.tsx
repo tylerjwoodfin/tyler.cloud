@@ -4,6 +4,7 @@ import "./styles.css";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import SubmenuComponent from "./SubmenuComponent";
 import AboutSection from "./AboutComponent";
+import ReachoutComponent from "./ReachoutComponent";
 
 const App: React.FC = () => {
   return (
@@ -28,7 +29,7 @@ const App: React.FC = () => {
         </li>
         <li className="link-with-icon">
           <a
-            href="https://linkedin.com/tylerjwoodfin"
+            href="https://linkedin.com/in/tylerjwoodfin"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -39,9 +40,7 @@ const App: React.FC = () => {
             />
           </a>
         </li>
-        <li>
-          <a href="#">reach out</a>
-        </li>
+        <ReachoutComponent></ReachoutComponent>
       </ul>
     </div>
   );

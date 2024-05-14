@@ -10,7 +10,7 @@ body {
 /* fonts */
 h1 {
   font-weight: 300;
-  font-size: 7vh;
+  font-size: 1.9em;
   margin-top: 25%;
 }
 
@@ -141,4 +141,68 @@ button:focus-visible,
 
 .description {
   margin-top: 0px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 90%;
+  max-width: 350px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: white;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+textarea.form-input {
+  height: 100px;
+  resize: none;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.8vh;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #ddd;
+}
+
+.thank-you-message {
+  color: white;
+  font-size: 18px;
+}
+
+.reachout {
+  margin-top: 20px;
+}
+
+.reachout-section {
+  transition: opacity 500ms ease-in-out;
 }
