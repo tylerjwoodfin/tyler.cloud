@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+Disallow: /Logs
+Disallow: /login
+Disallow: /old
+Disallow: /tpn
+Disallow: /blog
+Disallow: /.git

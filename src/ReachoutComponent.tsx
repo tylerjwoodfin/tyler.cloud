@@ -11,20 +11,23 @@ const ContactForm = ({ onSuccess }: any) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `sendMessage.php?message=${encodeURIComponent(
+        `feedback.php?message=${encodeURIComponent(
           message
         )}&contact=${encodeURIComponent(contact)}`
       );
-      if (response.ok) {
+      if (response.status === 200) {
         setIsSubmitted(true);
         setTimeout(() => {
           onSuccess();
-        }, 3000); // Hide form after 3 seconds
+        }, 1500);
+      } else if (response.status === 304) {
+        console.error("304 Not Modified: The resource has not been modified.");
       } else {
-        alert("Failed to send message");
+        const errorText = await response.text();
+        console.error("Error response:", errorText);
       }
     } catch (error) {
-      alert("An error occurred");
+      console.error("Fetch error:", error);
     }
   };
 
@@ -82,7 +85,7 @@ const ReachOutComponent = () => {
     setTimeout(() => {
       setIsVisible(false);
       setTimeout(() => setShouldRender(false), 500); // Allow time for transition
-    }, 3000);
+    }, 1500);
   };
 
   return (
