@@ -34,10 +34,10 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
     e.preventDefault();
     if (!showSubmenuContent) {
       setShowSubmenuContent(true);
-      setTimeout(() => setVisible(true), 10);
+      setVisible(true);
     } else {
       setVisible(false);
-      setTimeout(() => setShowSubmenuContent(false), 200);
+      setTimeout(() => setShowSubmenuContent(false), 500); // Match the transition duration
     }
   };
 
@@ -116,23 +116,25 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
           />
         </a>
       </li>
-      {showSubmenuContent && (
-        <div className={`submenu ${visible ? "show" : ""}`}>
-          {loading ? (
-            <div id="load-spin-latest">Loading...</div>
-          ) : (
-            <ul>
-              {projects.map((project) => (
-                <ProjectItem
-                  key={project.id}
-                  project={project}
-                  onSublinkClick={handleSublinkClick}
-                />
-              ))}
-            </ul>
-          )}
-        </div>
-      )}
+      <div
+        className={`submenu ${
+          showSubmenuContent ? (visible ? "show" : "hide") : "hide"
+        }`}
+      >
+        {loading ? (
+          <div id="load-spin-latest">Loading...</div>
+        ) : (
+          <ul>
+            {projects.map((project) => (
+              <ProjectItem
+                key={project.id}
+                project={project}
+                onSublinkClick={handleSublinkClick}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };
@@ -149,9 +151,11 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
   project,
   onSublinkClick,
 }) => {
+  const hasSublinks = project.sublinks && project.sublinks.length > 0;
+
   return (
     <li className="link-with-icon">
-      {project.sublinks && project.sublinks.length > 0 ? (
+      {hasSublinks ? (
         <>
           <a href="#sublinks" onClick={(e) => onSublinkClick(e, project.id)}>
             {project.name}
@@ -162,28 +166,37 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
               }`}
             />
           </a>
-          {project.sublinksVisible && (
-            <div className={`submenu ${project.sublinksVisible ? "show" : ""}`}>
-              {project.sublinks.map((sublink) => (
+          <p className="description">
+            {project.description?.toLowerCase() || ""}
+          </p>
+          <div
+            className={`submenu ${project.sublinksVisible ? "show" : "hide"}`}
+          >
+            <ul>
+              {project.sublinks?.map((sublink) => (
                 <ProjectItem
                   key={sublink.id}
                   project={sublink}
                   onSublinkClick={onSublinkClick}
                 />
               ))}
-            </div>
-          )}
+            </ul>
+          </div>
         </>
       ) : (
-        <a href={project.url} target="_blank" rel="noopener noreferrer">
-          {project.name}
-          <FontAwesomeIcon
-            icon={faArrowUpRightFromSquare}
-            className="icon hidden"
-          />
-        </a>
+        <>
+          <a href={project.url} target="_blank" rel="noopener noreferrer">
+            {project.name}
+            <FontAwesomeIcon
+              icon={faArrowUpRightFromSquare}
+              className="icon hidden"
+            />
+          </a>
+          <p className="description">
+            {project.description?.toLowerCase() || ""}
+          </p>
+        </>
       )}
-      <p className="description">{project.description || ""}</p>
     </li>
   );
 };

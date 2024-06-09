@@ -73,7 +73,7 @@ const olderStuffLinks = [
       },
       {
         id: "2c",
-        url: "/tpn/c",
+        url: "/tpn/tpnindex.htm",
         name: "web design in microsoft word?",
         description: "summer 2007",
       },

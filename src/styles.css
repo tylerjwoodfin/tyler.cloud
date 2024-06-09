@@ -191,26 +191,34 @@ textarea.form-input {
 }
 
 /* submenucomponent */
-.sublinks {
-  margin-left: 35px;
-}
-
 .section {
   transition: opacity 500ms ease-in-out;
 }
 
 .submenu {
-  display: flex;
-  flex-direction: column;
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
   margin-left: 35px;
   margin-bottom: 15px;
-  opacity: 0;
-  visibility: hidden; 
-  transition: opacity 500ms, ease-in-out visibility 0s 500ms;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
 }
 
-.submenu.show {
+.submenu.show, .about.show {
+  max-height: 1000px;
   opacity: 1;
   visibility: visible;
-  transition: opacity ease-in-out 500ms;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
+}
+
+.submenu.hide, .about, .about.hide {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+}
+
+.about.show {
+  max-height: 2000px;
 }
