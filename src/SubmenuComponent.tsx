@@ -11,6 +11,7 @@ interface Project {
   url: string;
   name: string;
   description?: string;
+  sublinks?: Project[];
 }
 
 interface SubmenuComponentProps {
@@ -105,10 +106,29 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
                       className="icon hidden"
                     />
                   </a>
-                  <p className="description">
-                    {project.description?.toLowerCase() ||
-                      "(no description yet)"}
-                  </p>
+                  <p className="description">{project.description || ""}</p>
+                  {project.sublinks && project.sublinks.length > 0 && (
+                    <ul className="sublinks">
+                      {project.sublinks.map((sublink) => (
+                        <li key={sublink.id} className="link-with-icon">
+                          <a
+                            href={sublink.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {sublink.name}
+                            <FontAwesomeIcon
+                              icon={faArrowUpRightFromSquare}
+                              className="icon hidden"
+                            />
+                          </a>
+                          <p className="description">
+                            {sublink.description || ""}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))}
             </ul>
