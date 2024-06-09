@@ -5,6 +5,7 @@ import { useState } from "react";
 const AboutSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const yearsExperience = new Date().getFullYear() - 2016;
 
   const toggleVisibility = () => {
     if (isVisible) {
@@ -33,19 +34,32 @@ const AboutSection = () => {
             className={`about-section ${isVisible ? "visible" : "hidden"}`}
             style={{ transition: "opacity 500ms ease-in-out" }}
           >
-            <img id="about-img" className="face" src="img/face.jpg" />
-            <h3>I'm a full-stack software engineer in San Francisco.</h3>
+            <img
+              id="about-img"
+              className="face"
+              src="img/face.jpg"
+              alt="Tyler Woodfin, Full-stack Software Engineer"
+            />
+            <h3>
+              I'm Tyler Woodfin, a full-stack software engineer based in San
+              Francisco.
+            </h3>
             <p>
-              I've progressed quickly in my career at Apiture, where I lead a
-              React Native engineering team. I spend quite a bit of time with
-              Angular, Python, and React Native (always with TypeScript!). I'm
-              always trying to find something else to learn.
+              With over {yearsExperience} years in the tech industry, I
+              currently lead a React Native engineering team at Apiture. My
+              technical toolkit includes Angular, Python, and React Native, all
+              paired with TypeScript.
             </p>
             <p>
-              Previously, at Oracle, I transitioned from Associate Consultant to
-              Cloud Engineer, taking on client-facing demos and managing
-              significant projects, like developing websites and tracking
-              systems for nonprofits.
+              Previously at Oracle, I advanced from Associate Consultant to
+              Cloud Engineer, where I handled client-facing demos, led
+              migrations, and developed plenty of dashboards and internal
+              websites.
+            </p>
+            <p>
+              I am committed to personal and professional growth, continually
+              exploring new technologies and methodologies to enhance my skills.
+              Check out my work below!
             </p>
           </div>
         </div>
