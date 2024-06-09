@@ -56,7 +56,6 @@ const olderStuffLinks = [
   },
   {
     id: "2",
-    url: "/tpn",
     name: "my website from middle school",
     description: "built in 6th grade; proceed at your own risk.",
     sublinks: [

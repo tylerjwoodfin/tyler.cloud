@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   faArrowDown,
   faArrowUp,
@@ -8,10 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Project {
   id: string;
-  url: string;
+  url?: string;
   name: string;
   description?: string;
   sublinks?: Project[];
+  showSublinks?: boolean;
 }
 
 interface SubmenuComponentProps {
@@ -27,6 +28,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
   const [loading, setLoading] = useState(true);
   const [showLatest, setShowLatest] = useState(false);
   const [visible, setVisible] = useState(false);
+  const hasFetchedLatest = useRef(false); // Add a ref to track if the API call has been made
 
   const handleLatestClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -39,42 +41,65 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
     }
   };
 
+  const handleSublinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    projectId: string
+  ) => {
+    e.preventDefault();
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectId
+          ? { ...project, showSublinks: !project.showSublinks }
+          : project
+      )
+    );
+  };
+
   useEffect(() => {
-    if (!customLinks) {
-      const getLatest = async () => {
-        try {
-          const response = await fetch(
-            "https://api.github.com/users/tylerjwoodfin/repos"
-          );
-          const data = await response.json();
-          const sortedData = data.sort(
-            (a: any, b: any) =>
-              new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
-          );
-          const filteredData = sortedData
-            .filter((item: any) => item.name !== "tyler.cloud")
-            .slice(0, 7);
-          setProjects(filteredData);
-        } catch (error) {
-          console.error("Failed to fetch projects:", error);
-          setProjects([
-            {
-              id: "error",
-              url: "#",
-              name: "Couldn't fetch from Github.",
-              description: "",
-            },
-          ]);
-        } finally {
-          setLoading(false);
-        }
-      };
+    const getLatest = async () => {
+      try {
+        const response = await fetch(
+          "https://api.github.com/users/tylerjwoodfin/repos"
+        );
+        const data = await response.json();
+        const sortedData = data.sort(
+          (a: any, b: any) =>
+            new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+        );
+        const filteredData = sortedData
+          .filter((item: any) => item.name !== "tyler.cloud")
+          .slice(0, 7);
+        setProjects(
+          filteredData.map((project: Project) => ({
+            ...project,
+            showSublinks: false,
+          }))
+        );
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        setProjects([
+          {
+            id: "error",
+            url: "#",
+            name: "Couldn't fetch from Github.",
+            description: "",
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (title === "latest side projects" && !hasFetchedLatest.current) {
       getLatest();
-    } else {
-      setProjects(customLinks);
+      hasFetchedLatest.current = true; // Mark as fetched
+    } else if (customLinks) {
+      setProjects(
+        customLinks.map((link) => ({ ...link, showSublinks: false }))
+      ); // Initialize showSublinks
       setLoading(false);
     }
-  }, [customLinks]);
+  }, [title, customLinks]);
 
   return (
     <div>
@@ -95,40 +120,55 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
             <ul>
               {projects.map((project) => (
                 <li key={project.id} className="link-with-icon">
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.name}
-                    <FontAwesomeIcon
-                      icon={faArrowUpRightFromSquare}
-                      className="icon hidden"
-                    />
-                  </a>
-                  <p className="description">{project.description || ""}</p>
-                  {project.sublinks && project.sublinks.length > 0 && (
-                    <ul className="sublinks">
-                      {project.sublinks.map((sublink) => (
-                        <li key={sublink.id} className="link-with-icon">
-                          <a
-                            href={sublink.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {sublink.name}
-                            <FontAwesomeIcon
-                              icon={faArrowUpRightFromSquare}
-                              className="icon hidden"
-                            />
-                          </a>
-                          <p className="description">
-                            {sublink.description || ""}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
+                  {project.sublinks && project.sublinks.length > 0 ? (
+                    <>
+                      <a
+                        href="#sublinks"
+                        onClick={(e) => handleSublinkClick(e, project.id)}
+                      >
+                        {project.name}
+                        <FontAwesomeIcon
+                          icon={project.showSublinks ? faArrowUp : faArrowDown}
+                          className="icon"
+                        />
+                      </a>
+                      {project.showSublinks && (
+                        <ul className="sublinks">
+                          {project.sublinks.map((sublink) => (
+                            <li key={sublink.id} className="link-with-icon">
+                              <a
+                                href={sublink.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                {sublink.name}
+                                <FontAwesomeIcon
+                                  icon={faArrowUpRightFromSquare}
+                                  className="icon hidden"
+                                />
+                              </a>
+                              <p className="description">
+                                {sublink.description || ""}
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {project.name}
+                      <FontAwesomeIcon
+                        icon={faArrowUpRightFromSquare}
+                        className="icon hidden"
+                      />
+                    </a>
                   )}
+                  <p className="description">{project.description || ""}</p>
                 </li>
               ))}
             </ul>

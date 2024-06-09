@@ -31,7 +31,7 @@ const AboutSection = () => {
       {shouldRender && (
         <div className={`about ${isVisible ? "show" : ""}`}>
           <div
-            className={`about-section ${isVisible ? "visible" : "hidden"}`}
+            className={`section ${isVisible ? "visible" : "hidden"}`}
             style={{ transition: "opacity 500ms ease-in-out" }}
           >
             <img
