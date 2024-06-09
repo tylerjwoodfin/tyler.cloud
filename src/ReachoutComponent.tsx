@@ -56,7 +56,11 @@ const ContactForm = ({ onSuccess }: any) => {
               />
             </label>
           </div>
-          <button type="submit" className="submit-button">
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={!message || message.length < 4}
+          >
             send
           </button>
         </>

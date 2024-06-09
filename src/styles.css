@@ -70,10 +70,10 @@ button {
   text-align: left;
 }
 
-a:hover,
-button:hover,
-a:focus-visible,
-button:focus-visible,
+a:not([disabled]):hover,
+button:not([disabled]):hover,
+a:not([disabled]):focus-visible,
+button:not([secondary]):focus-visible,
 .underline {
   text-decoration: underline;
   outline-offset: 0;
@@ -192,6 +192,12 @@ textarea.form-input {
 
 .submit-button:hover {
   background-color: #ddd;
+}
+
+.submit-button:disabled {
+  background-color: #f2f2f2;
+  color: #cccccc;
+  cursor: not-allowed;
 }
 
 .thank-you-message {
