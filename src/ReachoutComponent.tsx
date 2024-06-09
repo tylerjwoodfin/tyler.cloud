@@ -106,7 +106,7 @@ const ReachOutComponent = () => {
       {shouldRender && (
         <div className={`reachout ${isVisible ? "show" : ""}`}>
           <div
-            className={`reachout-section ${isVisible ? "visible" : "hidden"}`}
+            className={`section ${isVisible ? "visible" : "hidden"}`}
             style={{ transition: "opacity 500ms ease-in-out" }}
           >
             <ContactForm onSuccess={handleSuccess} />

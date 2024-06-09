@@ -81,11 +81,6 @@ button:not([secondary]):focus-visible,
 }
 
 /* about */
-.about-section {
-  opacity: 1;
-  transition: opacity 500ms ease-in-out;
-}
-
 .hidden {
   opacity: 0;
   visibility: hidden;
@@ -110,22 +105,6 @@ button:not([secondary]):focus-visible,
 .link-with-icon a:hover .icon, .link-with-icon a:hover .icon {
   opacity: 1;
   visibility: visible;
-}
-
-.latest {
-  display: flex;
-  flex-direction: column;
-  margin-left: 35px;
-  margin-bottom: 15px;
-  opacity: 0;
-  visibility: hidden; 
-  transition: opacity 500ms, ease-in-out visibility 0s 500ms;
-}
-
-.latest.show {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity ease-in-out 500ms;
 }
 
 .face {
@@ -173,6 +152,8 @@ button:not([secondary]):focus-visible,
   font-size: 14px;
 }
 
+
+/* reachoutcomponent */
 textarea.form-input {
   height: 100px;
   resize: none;
@@ -209,6 +190,35 @@ textarea.form-input {
   margin-top: 20px;
 }
 
-.reachout-section {
+/* submenucomponent */
+.section {
   transition: opacity 500ms ease-in-out;
+}
+
+.submenu {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  margin-left: 35px;
+  margin-bottom: 15px;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+}
+
+.submenu.show, .about.show {
+  max-height: 1000px;
+  opacity: 1;
+  visibility: visible;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
+}
+
+.submenu.hide, .about, .about.hide {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+}
+
+.about.show {
+  max-height: 2000px;
 }

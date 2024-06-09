@@ -52,12 +52,32 @@ const olderStuffLinks = [
     url: "/rundino",
     name: "run, dino",
     description: "an addictive and hilarious web-based dodging game",
+    sublinks: [],
   },
   {
     id: "2",
-    url: "/tpn",
     name: "my website from middle school",
     description: "built in 6th grade; proceed at your own risk.",
+    sublinks: [
+      {
+        id: "2a",
+        url: "/tpn/original1.htm",
+        name: "my first attempt",
+        description: "fall 2006",
+      },
+      {
+        id: "2a",
+        url: "/tpn/MyNewPageTyler.htm",
+        name: "my second attempt",
+        description: "spring 2007",
+      },
+      {
+        id: "2c",
+        url: "/tpn/tpnindex.htm",
+        name: "web design in microsoft word?",
+        description: "summer 2007",
+      },
+    ],
   },
 ];
 

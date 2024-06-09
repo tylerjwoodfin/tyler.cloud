@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   faArrowDown,
   faArrowUp,
@@ -8,9 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Project {
   id: string;
-  url: string;
+  url?: string;
   name: string;
   description?: string;
+  sublinks?: Project[];
+  sublinksVisible?: boolean;
 }
 
 interface SubmenuComponentProps {
@@ -24,61 +26,89 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
 }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showLatest, setShowLatest] = useState(false);
+  const [showSubmenuContent, setShowSubmenuContent] = useState(false);
   const [visible, setVisible] = useState(false);
+  const hasFetchedLatest = useRef(false);
 
-  const handleLatestClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleSubmenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (!showLatest) {
-      setShowLatest(true);
-      setTimeout(() => setVisible(true), 10);
+    if (!showSubmenuContent) {
+      setShowSubmenuContent(true);
+      setVisible(true);
     } else {
       setVisible(false);
-      setTimeout(() => setShowLatest(false), 200);
+      setTimeout(() => setShowSubmenuContent(false), 500); // Match the transition duration
     }
   };
 
+  const handleSublinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    projectId: string
+  ) => {
+    e.preventDefault();
+    setProjects((prevProjects) =>
+      prevProjects.map((project) =>
+        project.id === projectId
+          ? { ...project, sublinksVisible: !project.sublinksVisible }
+          : project
+      )
+    );
+  };
+
   useEffect(() => {
-    if (!customLinks) {
-      const getLatest = async () => {
-        try {
-          const response = await fetch(
-            "https://api.github.com/users/tylerjwoodfin/repos"
-          );
-          const data = await response.json();
-          const sortedData = data.sort(
-            (a: any, b: any) =>
-              new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
-          );
-          const filteredData = sortedData
-            .filter((item: any) => item.name !== "tyler.cloud")
-            .slice(0, 7);
-          setProjects(filteredData);
-        } catch (error) {
-          console.error("Failed to fetch projects:", error);
-          setProjects([
-            {
-              id: "error",
-              url: "#",
-              name: "Couldn't fetch from Github.",
-              description: "",
-            },
-          ]);
-        } finally {
-          setLoading(false);
-        }
-      };
+    const getLatest = async () => {
+      try {
+        const response = await fetch(
+          "https://api.github.com/users/tylerjwoodfin/repos"
+        );
+        const data = await response.json();
+        const sortedData = data.sort(
+          (a: any, b: any) =>
+            new Date(b.pushed_at).getTime() - new Date(a.pushed_at).getTime()
+        );
+        const filteredData = sortedData
+          .filter((item: any) => item.name !== "tyler.cloud")
+          .slice(0, 7);
+        setProjects(
+          filteredData.map((project: any) => ({
+            id: project.id,
+            url: `https://github.com/${project.owner.login}/${project.name}`,
+            name: project.name,
+            description: project.description,
+            sublinksVisible: false,
+          }))
+        );
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        setProjects([
+          {
+            id: "error",
+            url: "#",
+            name: "Couldn't fetch from Github.",
+            description: "",
+            sublinksVisible: false,
+          },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (title === "latest side projects" && !hasFetchedLatest.current) {
       getLatest();
-    } else {
-      setProjects(customLinks);
+      hasFetchedLatest.current = true;
+    } else if (customLinks) {
+      setProjects(
+        customLinks.map((link) => ({ ...link, sublinksVisible: false }))
+      );
       setLoading(false);
     }
-  }, [customLinks]);
+  }, [title, customLinks]);
 
   return (
     <div>
       <li className="link-with-icon">
-        <a href="#latest" onClick={handleLatestClick}>
+        <a href="#" onClick={handleSubmenuClick}>
           {title}
           <FontAwesomeIcon
             icon={visible ? faArrowUp : faArrowDown}
@@ -86,36 +116,88 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
           />
         </a>
       </li>
-      {showLatest && (
-        <div className={`latest ${visible ? "show" : ""}`}>
-          {loading ? (
-            <div id="load-spin-latest">Loading...</div>
-          ) : (
+      <div
+        className={`submenu ${
+          showSubmenuContent ? (visible ? "show" : "hide") : "hide"
+        }`}
+      >
+        {loading ? (
+          <div id="load-spin-latest">Loading...</div>
+        ) : (
+          <ul>
+            {projects.map((project) => (
+              <ProjectItem
+                key={project.id}
+                project={project}
+                onSublinkClick={handleSublinkClick}
+              />
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+};
+
+interface ProjectItemProps {
+  project: Project;
+  onSublinkClick: (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    projectId: string
+  ) => void;
+}
+
+const ProjectItem: React.FC<ProjectItemProps> = ({
+  project,
+  onSublinkClick,
+}) => {
+  const hasSublinks = project.sublinks && project.sublinks.length > 0;
+
+  return (
+    <li className="link-with-icon">
+      {hasSublinks ? (
+        <>
+          <a href="#sublinks" onClick={(e) => onSublinkClick(e, project.id)}>
+            {project.name}
+            <FontAwesomeIcon
+              icon={project.sublinksVisible ? faArrowUp : faArrowDown}
+              className={`icon ${
+                project.sublinksVisible ? "visible" : "hidden"
+              }`}
+            />
+          </a>
+          <p className="description">
+            {project.description?.toLowerCase() || ""}
+          </p>
+          <div
+            className={`submenu ${project.sublinksVisible ? "show" : "hide"}`}
+          >
             <ul>
-              {projects.map((project) => (
-                <li key={project.id} className="link-with-icon">
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {project.name}
-                    <FontAwesomeIcon
-                      icon={faArrowUpRightFromSquare}
-                      className="icon hidden"
-                    />
-                  </a>
-                  <p className="description">
-                    {project.description?.toLowerCase() ||
-                      "(no description yet)"}
-                  </p>
-                </li>
+              {project.sublinks?.map((sublink) => (
+                <ProjectItem
+                  key={sublink.id}
+                  project={sublink}
+                  onSublinkClick={onSublinkClick}
+                />
               ))}
             </ul>
-          )}
-        </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <a href={project.url} target="_blank" rel="noopener noreferrer">
+            {project.name}
+            <FontAwesomeIcon
+              icon={faArrowUpRightFromSquare}
+              className="icon hidden"
+            />
+          </a>
+          <p className="description">
+            {project.description?.toLowerCase() || ""}
+          </p>
+        </>
       )}
-    </div>
+    </li>
   );
 };
 

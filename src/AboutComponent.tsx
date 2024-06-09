@@ -10,7 +10,7 @@ const AboutSection = () => {
   const toggleVisibility = () => {
     if (isVisible) {
       setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 0);
+      setTimeout(() => setShouldRender(false), 500); // Match the transition duration
     } else {
       setShouldRender(true);
       setTimeout(() => setIsVisible(true), 0);
@@ -29,11 +29,8 @@ const AboutSection = () => {
         </a>
       </li>
       {shouldRender && (
-        <div className={`about ${isVisible ? "show" : ""}`}>
-          <div
-            className={`about-section ${isVisible ? "visible" : "hidden"}`}
-            style={{ transition: "opacity 500ms ease-in-out" }}
-          >
+        <div className={`about ${isVisible ? "show" : "hide"}`}>
+          <div className={`section ${isVisible ? "visible" : "hidden"}`}>
             <img
               id="about-img"
               className="face"
