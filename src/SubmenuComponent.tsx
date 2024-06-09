@@ -12,7 +12,7 @@ interface Project {
   name: string;
   description?: string;
   sublinks?: Project[];
-  showSublinks?: boolean;
+  sublinksVisible?: boolean;
 }
 
 interface SubmenuComponentProps {
@@ -26,18 +26,18 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
 }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showLatest, setShowLatest] = useState(false);
+  const [showSubmenuContent, setShowSubmenuContent] = useState(false);
   const [visible, setVisible] = useState(false);
-  const hasFetchedLatest = useRef(false); // Add a ref to track if the API call has been made
+  const hasFetchedLatest = useRef(false);
 
-  const handleLatestClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleSubmenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (!showLatest) {
-      setShowLatest(true);
+    if (!showSubmenuContent) {
+      setShowSubmenuContent(true);
       setTimeout(() => setVisible(true), 10);
     } else {
       setVisible(false);
-      setTimeout(() => setShowLatest(false), 200);
+      setTimeout(() => setShowSubmenuContent(false), 200);
     }
   };
 
@@ -49,7 +49,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
     setProjects((prevProjects) =>
       prevProjects.map((project) =>
         project.id === projectId
-          ? { ...project, showSublinks: !project.showSublinks }
+          ? { ...project, sublinksVisible: !project.sublinksVisible }
           : project
       )
     );
@@ -70,9 +70,12 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
           .filter((item: any) => item.name !== "tyler.cloud")
           .slice(0, 7);
         setProjects(
-          filteredData.map((project: Project) => ({
-            ...project,
-            showSublinks: false,
+          filteredData.map((project: any) => ({
+            id: project.id,
+            url: `https://github.com/${project.owner.login}/${project.name}`,
+            name: project.name,
+            description: project.description,
+            sublinksVisible: false,
           }))
         );
       } catch (error) {
@@ -83,6 +86,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
             url: "#",
             name: "Couldn't fetch from Github.",
             description: "",
+            sublinksVisible: false,
           },
         ]);
       } finally {
@@ -92,11 +96,11 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
 
     if (title === "latest side projects" && !hasFetchedLatest.current) {
       getLatest();
-      hasFetchedLatest.current = true; // Mark as fetched
+      hasFetchedLatest.current = true;
     } else if (customLinks) {
       setProjects(
-        customLinks.map((link) => ({ ...link, showSublinks: false }))
-      ); // Initialize showSublinks
+        customLinks.map((link) => ({ ...link, sublinksVisible: false }))
+      );
       setLoading(false);
     }
   }, [title, customLinks]);
@@ -104,7 +108,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
   return (
     <div>
       <li className="link-with-icon">
-        <a href="#latest" onClick={handleLatestClick}>
+        <a href="#" onClick={handleSubmenuClick}>
           {title}
           <FontAwesomeIcon
             icon={visible ? faArrowUp : faArrowDown}
@@ -112,70 +116,75 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
           />
         </a>
       </li>
-      {showLatest && (
-        <div className={`latest ${visible ? "show" : ""}`}>
+      {showSubmenuContent && (
+        <div className={`submenu ${visible ? "show" : ""}`}>
           {loading ? (
             <div id="load-spin-latest">Loading...</div>
           ) : (
             <ul>
               {projects.map((project) => (
-                <li key={project.id} className="link-with-icon">
-                  {project.sublinks && project.sublinks.length > 0 ? (
-                    <>
-                      <a
-                        href="#sublinks"
-                        onClick={(e) => handleSublinkClick(e, project.id)}
-                      >
-                        {project.name}
-                        <FontAwesomeIcon
-                          icon={project.showSublinks ? faArrowUp : faArrowDown}
-                          className="icon"
-                        />
-                      </a>
-                      {project.showSublinks && (
-                        <ul className="sublinks">
-                          {project.sublinks.map((sublink) => (
-                            <li key={sublink.id} className="link-with-icon">
-                              <a
-                                href={sublink.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {sublink.name}
-                                <FontAwesomeIcon
-                                  icon={faArrowUpRightFromSquare}
-                                  className="icon hidden"
-                                />
-                              </a>
-                              <p className="description">
-                                {sublink.description || ""}
-                              </p>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </>
-                  ) : (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {project.name}
-                      <FontAwesomeIcon
-                        icon={faArrowUpRightFromSquare}
-                        className="icon hidden"
-                      />
-                    </a>
-                  )}
-                  <p className="description">{project.description || ""}</p>
-                </li>
+                <ProjectItem
+                  key={project.id}
+                  project={project}
+                  onSublinkClick={handleSublinkClick}
+                />
               ))}
             </ul>
           )}
         </div>
       )}
     </div>
+  );
+};
+
+interface ProjectItemProps {
+  project: Project;
+  onSublinkClick: (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    projectId: string
+  ) => void;
+}
+
+const ProjectItem: React.FC<ProjectItemProps> = ({
+  project,
+  onSublinkClick,
+}) => {
+  return (
+    <li className="link-with-icon">
+      {project.sublinks && project.sublinks.length > 0 ? (
+        <>
+          <a href="#sublinks" onClick={(e) => onSublinkClick(e, project.id)}>
+            {project.name}
+            <FontAwesomeIcon
+              icon={project.sublinksVisible ? faArrowUp : faArrowDown}
+              className={`icon ${
+                project.sublinksVisible ? "visible" : "hidden"
+              }`}
+            />
+          </a>
+          {project.sublinksVisible && (
+            <div className={`submenu ${project.sublinksVisible ? "show" : ""}`}>
+              {project.sublinks.map((sublink) => (
+                <ProjectItem
+                  key={sublink.id}
+                  project={sublink}
+                  onSublinkClick={onSublinkClick}
+                />
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
+        <a href={project.url} target="_blank" rel="noopener noreferrer">
+          {project.name}
+          <FontAwesomeIcon
+            icon={faArrowUpRightFromSquare}
+            className="icon hidden"
+          />
+        </a>
+      )}
+      <p className="description">{project.description || ""}</p>
+    </li>
   );
 };
 

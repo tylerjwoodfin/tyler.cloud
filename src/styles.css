@@ -107,22 +107,6 @@ button:not([secondary]):focus-visible,
   visibility: visible;
 }
 
-.latest {
-  display: flex;
-  flex-direction: column;
-  margin-left: 35px;
-  margin-bottom: 15px;
-  opacity: 0;
-  visibility: hidden; 
-  transition: opacity 500ms, ease-in-out visibility 0s 500ms;
-}
-
-.latest.show {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity ease-in-out 500ms;
-}
-
 .face {
   display: flex;
   border-radius: 12px;
@@ -168,6 +152,8 @@ button:not([secondary]):focus-visible,
   font-size: 14px;
 }
 
+
+/* reachoutcomponent */
 textarea.form-input {
   height: 100px;
   resize: none;
@@ -204,10 +190,27 @@ textarea.form-input {
   margin-top: 20px;
 }
 
+/* submenucomponent */
 .sublinks {
   margin-left: 35px;
 }
 
 .section {
   transition: opacity 500ms ease-in-out;
+}
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 35px;
+  margin-bottom: 15px;
+  opacity: 0;
+  visibility: hidden; 
+  transition: opacity 500ms, ease-in-out visibility 0s 500ms;
+}
+
+.submenu.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity ease-in-out 500ms;
 }

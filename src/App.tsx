@@ -61,14 +61,14 @@ const olderStuffLinks = [
     sublinks: [
       {
         id: "2a",
-        url: "/tpn/a",
+        url: "/tpn/original1.htm",
         name: "my first attempt",
         description: "fall 2006",
       },
       {
-        id: "2b",
-        url: "/tpn/b",
-        name: "running out of room",
+        id: "2a",
+        url: "/tpn/MyNewPageTyler.htm",
+        name: "my second attempt",
         description: "spring 2007",
       },
       {
