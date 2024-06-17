@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./styles.css";
+import "./styles.scss";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import SubmenuComponent from "./SubmenuComponent";
 import AboutSection from "./AboutComponent";
@@ -8,9 +8,10 @@ import ReachoutComponent from "./ReachoutComponent";
 
 const App: React.FC = () => {
   return (
-    <div className="content">
+    <div className="app">
+      <div className="blob"></div>
       <h1>Hi, I'm Tyler Woodfin.</h1>
-      <ul className="links">
+      <ul className="app__links">
         <AboutSection></AboutSection>
         <SubmenuComponent title="latest side projects"></SubmenuComponent>
         <SubmenuComponent title="older stuff" customLinks={olderStuffLinks} />
@@ -66,7 +67,7 @@ const olderStuffLinks = [
         description: "fall 2006",
       },
       {
-        id: "2a",
+        id: "2b",
         url: "/tpn/MyNewPageTyler.htm",
         name: "my second attempt",
         description: "spring 2007",

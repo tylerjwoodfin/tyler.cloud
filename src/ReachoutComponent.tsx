@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./styles.scss";
 
 const ContactForm = ({ onSuccess }: any) => {
   const [message, setMessage] = useState("");
@@ -32,13 +33,14 @@ const ContactForm = ({ onSuccess }: any) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="contact-form">
+    <form id="reach-out" onSubmit={handleSubmit}>
       {!isSubmitted ? (
         <>
           <div className="form-group">
             <label>
-              message
+              How can I help you?
               <textarea
+                id="input-message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className="form-input"
@@ -47,9 +49,10 @@ const ContactForm = ({ onSuccess }: any) => {
           </div>
           <div className="form-group">
             <label>
-              how can I contact you? (optional)
+              How can I contact you? (optional)
               <input
                 type="text"
+                id="input-contact"
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
                 className="form-input"
@@ -73,22 +76,14 @@ const ContactForm = ({ onSuccess }: any) => {
 
 const ReachOutComponent = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [shouldRender, setShouldRender] = useState(false);
 
   const toggleVisibility = () => {
-    if (isVisible) {
-      setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 500); // Allow time for transition
-    } else {
-      setShouldRender(true);
-      setTimeout(() => setIsVisible(true), 0);
-    }
+    setIsVisible((prevState) => !prevState);
   };
 
   const handleSuccess = () => {
     setTimeout(() => {
       setIsVisible(false);
-      setTimeout(() => setShouldRender(false), 500); // Allow time for transition
     }, 1500);
   };
 
@@ -103,16 +98,9 @@ const ReachOutComponent = () => {
           />
         </a>
       </li>
-      {shouldRender && (
-        <div className={`reachout ${isVisible ? "show" : ""}`}>
-          <div
-            className={`section ${isVisible ? "visible" : "hidden"}`}
-            style={{ transition: "opacity 500ms ease-in-out" }}
-          >
-            <ContactForm onSuccess={handleSuccess} />
-          </div>
-        </div>
-      )}
+      <div className={`reachout ${isVisible ? "visible" : "hidden"}`}>
+        <ContactForm onSuccess={handleSuccess} />
+      </div>
     </div>
   );
 };
