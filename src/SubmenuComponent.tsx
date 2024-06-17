@@ -166,7 +166,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
               }`}
             />
           </a>
-          <p className="description">
+          <p className="submenu__description">
             {project.description?.toLowerCase() || ""}
           </p>
           <div

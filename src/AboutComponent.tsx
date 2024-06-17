@@ -7,7 +7,8 @@ const AboutSection = () => {
   const [shouldRender, setShouldRender] = useState(false);
   const yearsExperience = new Date().getFullYear() - 2016;
 
-  const toggleVisibility = () => {
+  const toggleVisibility = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
     if (isVisible) {
       setIsVisible(false);
       setTimeout(() => setShouldRender(false), 500); // Match the transition duration
@@ -20,7 +21,7 @@ const AboutSection = () => {
   return (
     <div>
       <li className="link-with-icon">
-        <a href="#about" onClick={toggleVisibility}>
+        <a href="#" onClick={toggleVisibility}>
           about
           <FontAwesomeIcon
             icon={isVisible ? faArrowUp : faArrowDown}
@@ -30,10 +31,12 @@ const AboutSection = () => {
       </li>
       {shouldRender && (
         <div className={`about ${isVisible ? "show" : "hide"}`}>
-          <div className={`section ${isVisible ? "visible" : "hidden"}`}>
+          <div
+            className={`app__transition ${isVisible ? "visible" : "hidden"}`}
+          >
             <img
               id="about-img"
-              className="face"
+              className="about__face"
               src="img/face.jpg"
               alt="Tyler Woodfin, Full-stack Software Engineer"
             />
