@@ -256,7 +256,7 @@ body {
 .blob {
   position: fixed;
   opacity: 0.6;
-  width: inherit;
+  width: 300px;
   aspect-ratio: 1/1;
   animation: animate 10s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite alternate forwards;
   filter: blur(40px);
