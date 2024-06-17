@@ -33,7 +33,7 @@ const ContactForm = ({ onSuccess }: any) => {
   };
 
   return (
-    <form id="reach-out" onSubmit={handleSubmit} className="reachout">
+    <form id="reach-out" onSubmit={handleSubmit}>
       {!isSubmitted ? (
         <>
           <div className="form-group">
@@ -98,11 +98,9 @@ const ReachOutComponent = () => {
           />
         </a>
       </li>
-      {isVisible && (
-        <div className={`reachout ${isVisible ? "visible" : ""}`}>
-          <ContactForm onSuccess={handleSuccess} />
-        </div>
-      )}
+      <div className={`reachout ${isVisible ? "visible" : "hidden"}`}>
+        <ContactForm onSuccess={handleSuccess} />
+      </div>
     </div>
   );
 };
