@@ -12,9 +12,15 @@ const App: React.FC = () => {
       <div className="blob"></div>
       <h1>Hi, I'm Tyler Woodfin.</h1>
       <ul className="app__links">
-        <AboutSection></AboutSection>
-        <SubmenuComponent title="latest side projects"></SubmenuComponent>
-        <SubmenuComponent title="older stuff" customLinks={olderStuffLinks} />
+        <li className="link-with-icon">
+          <AboutSection />
+        </li>
+        <li className="link-with-icon">
+          <SubmenuComponent title="latest side projects" />
+        </li>
+        <li className="link-with-icon">
+          <SubmenuComponent title="older stuff" customLinks={olderStuffLinks} />
+        </li>
         <li className="link-with-icon">
           <a
             href="https://github.com/tylerjwoodfin"
@@ -41,7 +47,9 @@ const App: React.FC = () => {
             />
           </a>
         </li>
-        <ReachoutComponent></ReachoutComponent>
+        <li className="link-with-icon">
+          <ReachoutComponent />
+        </li>
       </ul>
     </div>
   );

@@ -107,15 +107,13 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
 
   return (
     <div>
-      <li className="link-with-icon">
-        <a href="#" onClick={handleSubmenuClick}>
-          {title}
-          <FontAwesomeIcon
-            icon={visible ? faArrowUp : faArrowDown}
-            className={`icon ${visible ? "visible" : "hidden"}`}
-          />
-        </a>
-      </li>
+      <a href="#" onClick={handleSubmenuClick}>
+        {title}
+        <FontAwesomeIcon
+          icon={visible ? faArrowUp : faArrowDown}
+          className={`icon ${visible ? "visible" : "hidden"}`}
+        />
+      </a>
       <div
         className={`submenu ${
           showSubmenuContent ? (visible ? "show" : "hide") : "hide"

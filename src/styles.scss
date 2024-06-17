@@ -2,7 +2,6 @@ $font-primary: "Source Sans Pro", sans-serif;
 $color-primary: #d8d8d8;
 $color-background: #1a1a1a;
 $color-link: darkorange;
-$color-white: white;
 $color-black: black;
 $font-size-base: 30px;
 $font-size-large: 38px;
@@ -51,7 +50,8 @@ body {
   }
 
   ul {
-    padding-left: 0;
+    margin-top: 20px;
+    padding-left: 0px;
   }
 
   li {
@@ -60,28 +60,32 @@ body {
     display: flex;
     flex-direction: column;
     text-wrap: wrap;
+  }
 
-    &.link-with-icon {
-      .icon {
-        margin-left: 10px;
-        position: absolute;
-        height: 22px;
+  .link-with-icon {
+    .icon {
+      margin-left: 10px;
+      position: absolute;
+      height: 22px;
 
-        &.hidden {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        &.visible {
-          opacity: 1;
-          visibility: visible;
-        }
+      &.hidden {
+        opacity: 0;
+        visibility: hidden;
       }
 
-      &:hover .icon {
+      &.visible {
         opacity: 1;
         visibility: visible;
       }
+    }
+
+    .description {
+      margin-top: 10px;
+    }
+
+    &:hover .icon {
+      opacity: 1;
+      visibility: visible;
     }
   }
 
@@ -124,6 +128,7 @@ body {
   overflow: hidden;
   opacity: 0;
   max-height: 0px;
+  margin-top: 20px;
   transition: $transition, visibility 0s linear 500ms;
 
   &.visible {
@@ -146,8 +151,8 @@ body {
     label {
       display: block;
       margin-bottom: 5px;
-      font-size: 16px;
-      color: $color-white;
+      font-size: .9em;
+      color: $color-primary;
     }
 
     .form-input {
@@ -155,8 +160,8 @@ body {
       padding: $padding-base;
       margin-top: 10px;
       background: transparent;
-      color: $color-white;
-      border: 1px solid $color-white;
+      color: $color-primary;
+      border: 1px solid $color-primary;
       border-radius: $border-radius-base;
       font-size: $font-size-medium;
 
@@ -176,7 +181,7 @@ body {
 
   .submit-button {
     padding: $padding-base 20px;
-    background-color: $color-white;
+    background-color: $color-primary;
     color: $color-black;
     border: none;
     border-radius: $border-radius-base;
@@ -195,7 +200,7 @@ body {
   }
 
   .thank-you-message {
-    color: $color-white;
+    color: $color-primary;
     font-size: $font-size-medium;
   }
 
@@ -223,7 +228,8 @@ body {
   }
 
   &__description {
-    margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 10px;
   }
 }
 
@@ -254,7 +260,7 @@ body {
 }
 
 .blob {
-  position: fixed;
+  position: absolute;
   opacity: 0.6;
   width: 300px;
   aspect-ratio: 1/1;
