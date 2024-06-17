@@ -38,7 +38,7 @@ const ContactForm = ({ onSuccess }: any) => {
         <>
           <div className="form-group">
             <label>
-              message
+              How can I help you?
               <textarea
                 id="input-message"
                 value={message}
@@ -49,7 +49,7 @@ const ContactForm = ({ onSuccess }: any) => {
           </div>
           <div className="form-group">
             <label>
-              how can I contact you? (optional)
+              How can I contact you? (optional)
               <input
                 type="text"
                 id="input-contact"

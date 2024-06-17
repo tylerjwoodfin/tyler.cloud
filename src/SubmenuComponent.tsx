@@ -68,7 +68,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
         );
         const filteredData = sortedData
           .filter((item: any) => item.name !== "tyler.cloud")
-          .slice(0, 7);
+          .slice(0, 5);
         setProjects(
           filteredData.map((project: any) => ({
             id: project.id,

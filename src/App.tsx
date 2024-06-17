@@ -9,6 +9,7 @@ import ReachoutComponent from "./ReachoutComponent";
 const App: React.FC = () => {
   return (
     <div className="app">
+      <div className="blob"></div>
       <h1>Hi, I'm Tyler Woodfin.</h1>
       <ul className="app__links">
         <AboutSection></AboutSection>

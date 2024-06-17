@@ -14,6 +14,7 @@ $padding-base: 10px;
 $border-radius-base: 12px;
 $box-shadow-base: -14px 21px 28px -2px rgba(135, 135, 135, 0.34);
 $media-breakpoint: 768px;
+$transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
 
 body {
   font-family: $font-primary;
@@ -123,13 +124,13 @@ body {
   overflow: hidden;
   opacity: 0;
   max-height: 0px;
-  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+  transition: $transition, visibility 0s linear 500ms;
 
   &.visible {
-    max-height: 1000px;
+    max-height: 1500px;
     opacity: 1;
     visibility: visible;
-    transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
+    transition: $transition;
   }
 
   display: flex;
@@ -208,17 +209,17 @@ body {
   margin-left: 35px;
 
   &.show {
-    max-height: 1000px;
+    max-height: 1500px;
     opacity: 1;
     visibility: visible;
-    transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
+    transition: $transition;
   }
 
   &.hide {
     max-height: 0;
     opacity: 0;
     visibility: hidden;
-    transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+    transition: $transition, visibility 0s linear 500ms;
   }
 
   &__description {
@@ -237,7 +238,7 @@ body {
     max-height: 0;
     opacity: 0;
     visibility: hidden;
-    transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out, visibility 0s linear 500ms;
+    transition: $transition, visibility 0s linear 500ms;
   }
 
   &__face {
@@ -249,5 +250,35 @@ body {
     height: auto;
     margin: 30px;
     margin-bottom: 15%;
+  }
+}
+
+.blob {
+  position: fixed;
+  opacity: 0.6;
+  width: inherit;
+  aspect-ratio: 1/1;
+  animation: animate 10s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite alternate forwards;
+  filter: blur(40px);
+  z-index: -1;
+  background: linear-gradient(47deg, rgb(83 41 54) 21%, rgb(78 76 59) 67%, rgb(72 46 100) 81%);
+}
+
+@keyframes animate {
+  0% {
+    translate: 40% -25%;
+    border-radius: 60% 40% 30% 70% / 100% 85% 92% 74%;
+  }
+  50% {
+    translate: 0% 13%;
+    border-radius: 20% 71% 47% 70% / 81% 15% 22% 54%;
+    rotate: 41deg;
+    scale: 1.15;
+  }
+  100% {
+    translate: -45% 39%;
+    border-radius: 100% 75% 92% 74% / 60% 80% 30% 70%;
+    rotate: -60deg;
+    scale: 1.05;
   }
 }
