@@ -2,7 +2,6 @@ $font-primary: "Source Sans Pro", sans-serif;
 $color-primary: #d8d8d8;
 $color-background: #1a1a1a;
 $color-link: darkorange;
-$color-white: white;
 $color-black: black;
 $font-size-base: 30px;
 $font-size-large: 38px;
@@ -51,7 +50,8 @@ body {
   }
 
   ul {
-    padding-left: 0;
+    margin-top: 20px;
+    padding-left: 0px;
   }
 
   li {
@@ -77,6 +77,10 @@ body {
         opacity: 1;
         visibility: visible;
       }
+    }
+
+    .description {
+      margin-top: 10px;
     }
 
     &:hover .icon {
@@ -147,8 +151,8 @@ body {
     label {
       display: block;
       margin-bottom: 5px;
-      font-size: 16px;
-      color: $color-white;
+      font-size: .9em;
+      color: $color-primary;
     }
 
     .form-input {
@@ -156,8 +160,8 @@ body {
       padding: $padding-base;
       margin-top: 10px;
       background: transparent;
-      color: $color-white;
-      border: 1px solid $color-white;
+      color: $color-primary;
+      border: 1px solid $color-primary;
       border-radius: $border-radius-base;
       font-size: $font-size-medium;
 
@@ -177,7 +181,7 @@ body {
 
   .submit-button {
     padding: $padding-base 20px;
-    background-color: $color-white;
+    background-color: $color-primary;
     color: $color-black;
     border: none;
     border-radius: $border-radius-base;
@@ -196,7 +200,7 @@ body {
   }
 
   .thank-you-message {
-    color: $color-white;
+    color: $color-primary;
     font-size: $font-size-medium;
   }
 
@@ -224,7 +228,8 @@ body {
   }
 
   &__description {
-    margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 10px;
   }
 }
 
