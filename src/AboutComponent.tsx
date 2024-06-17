@@ -20,15 +20,13 @@ const AboutSection = () => {
 
   return (
     <div>
-      <li className="link-with-icon">
-        <a href="#" onClick={toggleVisibility}>
-          about
-          <FontAwesomeIcon
-            icon={isVisible ? faArrowUp : faArrowDown}
-            className={`icon ${isVisible ? "visible" : "hidden"}`}
-          />
-        </a>
-      </li>
+      <a href="#" onClick={toggleVisibility}>
+        about
+        <FontAwesomeIcon
+          icon={isVisible ? faArrowUp : faArrowDown}
+          className={`icon ${isVisible ? "visible" : "hidden"}`}
+        />
+      </a>
       {shouldRender && (
         <div className={`about ${isVisible ? "show" : "hide"}`}>
           <div

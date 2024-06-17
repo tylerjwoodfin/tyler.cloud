@@ -89,15 +89,13 @@ const ReachOutComponent = () => {
 
   return (
     <div>
-      <li className="link-with-icon">
-        <a href="#reachout" onClick={toggleVisibility}>
-          reach out
-          <FontAwesomeIcon
-            icon={isVisible ? faArrowUp : faArrowDown}
-            className={`icon ${isVisible ? "visible" : "hidden"}`}
-          />
-        </a>
-      </li>
+      <a href="#reachout" onClick={toggleVisibility}>
+        reach out
+        <FontAwesomeIcon
+          icon={isVisible ? faArrowUp : faArrowDown}
+          className={`icon ${isVisible ? "visible" : "hidden"}`}
+        />
+      </a>
       <div className={`reachout ${isVisible ? "visible" : "hidden"}`}>
         <ContactForm onSuccess={handleSuccess} />
       </div>

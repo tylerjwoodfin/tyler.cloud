@@ -60,28 +60,28 @@ body {
     display: flex;
     flex-direction: column;
     text-wrap: wrap;
+  }
 
-    &.link-with-icon {
-      .icon {
-        margin-left: 10px;
-        position: absolute;
-        height: 22px;
+  .link-with-icon {
+    .icon {
+      margin-left: 10px;
+      position: absolute;
+      height: 22px;
 
-        &.hidden {
-          opacity: 0;
-          visibility: hidden;
-        }
-
-        &.visible {
-          opacity: 1;
-          visibility: visible;
-        }
+      &.hidden {
+        opacity: 0;
+        visibility: hidden;
       }
 
-      &:hover .icon {
+      &.visible {
         opacity: 1;
         visibility: visible;
       }
+    }
+
+    &:hover .icon {
+      opacity: 1;
+      visibility: visible;
     }
   }
 
@@ -124,6 +124,7 @@ body {
   overflow: hidden;
   opacity: 0;
   max-height: 0px;
+  margin-top: 20px;
   transition: $transition, visibility 0s linear 500ms;
 
   &.visible {
@@ -254,7 +255,7 @@ body {
 }
 
 .blob {
-  position: fixed;
+  position: absolute;
   opacity: 0.6;
   width: 300px;
   aspect-ratio: 1/1;
