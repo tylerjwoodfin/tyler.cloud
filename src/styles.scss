@@ -19,9 +19,12 @@ body {
   font-family: $font-primary;
   color: $color-primary;
   font-size: $font-size-base;
-  background-color: $color-background;
-  background-image: url("tile.png");
   margin: 0;
+  background-image: url("tile.png");
+  background-color: $color-background;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+
 }
 
 .app {
