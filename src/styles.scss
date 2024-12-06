@@ -19,7 +19,6 @@ body {
   font-family: $font-primary;
   color: $color-primary;
   font-size: $font-size-base;
-  margin: 0;
   background-image: url("tile.png");
   background-color: $color-background;
   padding-top: env(safe-area-inset-top);
@@ -68,7 +67,6 @@ body {
   .link-with-icon {
     .icon {
       margin-left: 10px;
-      position: absolute;
       height: 22px;
 
       &.hidden {
@@ -263,7 +261,7 @@ body {
 }
 
 .blob {
-  position: absolute;
+  position: fixed;
   opacity: 0.6;
   width: 300px;
   aspect-ratio: 1/1;

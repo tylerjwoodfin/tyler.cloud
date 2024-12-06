@@ -39,25 +39,25 @@ const AboutSection = () => {
               alt="Tyler Woodfin, Full-stack Software Engineer"
             />
             <h3>
-              I'm Tyler Woodfin, a full-stack software engineer based in San
+              I'm Tyler Woodfin, a full-stack software engineer in San
               Francisco.
             </h3>
             <p>
               With over {yearsExperience} years in the tech industry, I
-              currently lead a React Native engineering team at Apiture. My
-              technical toolkit includes Angular, Python, and React Native, all
-              paired with TypeScript.
+              currently lead a 9-person React Native engineering team at
+              Apiture. My toolkit includes Angular, Python, React Native, and
+              TypeScript, complemented by experience in cloud platforms like AWS
+              and OCI.
             </p>
             <p>
               Previously at Oracle, I advanced from Associate Consultant to
-              Cloud Engineer, where I handled client-facing demos, led
-              migrations, and developed plenty of dashboards and internal
-              websites.
+              Cloud Engineer, where I led migrations, delivered POCs, and
+              developed internal systems, including a skill-mapping website. My
+              work often focused on serverless and microservices architectures.
             </p>
             <p>
-              I am committed to personal and professional growth, continually
-              exploring new technologies and methodologies to enhance my skills.
-              Check out my work below!
+              Passionate about growth, I constantly explore new technologies and
+              methodologies to enhance both my team's and my personal skills.
             </p>
           </div>
         </div>
