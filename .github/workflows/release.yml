@@ -41,6 +41,7 @@ jobs:
         REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
         REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
       run: |
+        mkdir -p ~/.ssh
         echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no -p ${REMOTE_PORT}" build/ ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}
