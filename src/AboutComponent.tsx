@@ -7,7 +7,11 @@ const AboutSection = () => {
   const [shouldRender, setShouldRender] = useState(false);
   const yearsExperience = new Date().getFullYear() - 2016;
 
-  const toggleVisibility = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const toggleVisibility = (
+    e:
+      | React.MouseEvent<HTMLAnchorElement>
+      | React.KeyboardEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
     if (isVisible) {
       setIsVisible(false);
@@ -20,7 +24,18 @@ const AboutSection = () => {
 
   return (
     <div>
-      <a href="#" onClick={toggleVisibility}>
+      <a
+        href="#about"
+        role="button"
+        tabIndex={0}
+        onClick={toggleVisibility}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            toggleVisibility(e);
+            e.preventDefault(); // Prevent default scroll behavior when using space
+          }
+        }}
+      >
         about
         <FontAwesomeIcon
           icon={isVisible ? faArrowUp : faArrowDown}

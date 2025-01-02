@@ -30,7 +30,11 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
   const [visible, setVisible] = useState(false);
   const hasFetchedLatest = useRef(false);
 
-  const handleSubmenuClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleSubmenuClick = (
+    e:
+      | React.MouseEvent<HTMLAnchorElement>
+      | React.KeyboardEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
     if (!showSubmenuContent) {
       setShowSubmenuContent(true);
@@ -107,7 +111,18 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
 
   return (
     <div>
-      <a href="#" onClick={handleSubmenuClick}>
+      <a
+        href="#submenu"
+        role="button"
+        tabIndex={0}
+        onClick={handleSubmenuClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleSubmenuClick(e);
+            e.preventDefault(); // Prevent default scroll behavior when using space
+          }
+        }}
+      >
         {title}
         <FontAwesomeIcon
           icon={visible ? faArrowUp : faArrowDown}
