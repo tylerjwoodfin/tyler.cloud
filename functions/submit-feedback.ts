@@ -1,4 +1,10 @@
-export function onRequestPost(params) {
+export interface Env {
+  RESEND_API_KEY: string;
+  FEEDBACK_EMAIL_FROM: string;
+  FEEDBACK_EMAIL_TO: string;
+}
+
+export function onRequestPost(params: { request: Request; env: Env }) {
   return new Promise(function(resolve) {
     params.request.json().then(function(data) {
       var message = data.message;
@@ -9,7 +15,7 @@ export function onRequestPost(params) {
         return;
       }
 
-      var subject = "New Feedback from tylerwoodfin.com";
+      var subject = "New Website Feedback";
       var emailBody = [
         "Message:",
         message,
