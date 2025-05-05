@@ -8,29 +8,28 @@ const ContactForm = ({ onSuccess }: any) => {
   const [contact, setContact] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `feedback.php?message=${encodeURIComponent(
-          message
-        )}&contact=${encodeURIComponent(contact)}`
-      );
-      if (response.status === 200) {
+      const response = await fetch("/submit-feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message, contact }),
+      });
+  
+      if (response.ok) {
         setIsSubmitted(true);
-        setTimeout(() => {
-          onSuccess();
-        }, 1500);
-      } else if (response.status === 304) {
-        console.error("304 Not Modified: The resource has not been modified.");
+        setTimeout(onSuccess, 1500);
       } else {
         const errorText = await response.text();
-        console.error("Error response:", errorText);
+        console.error("Server error:", errorText);
       }
     } catch (error) {
       console.error("Fetch error:", error);
     }
-  };
+  };  
 
   return (
     <form id="reach-out" onSubmit={handleSubmit}>
