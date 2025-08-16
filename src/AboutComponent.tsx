@@ -1,8 +1,12 @@
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const AboutSection = () => {
+interface AboutSectionProps {
+  onMenuStateChange?: (isExpanded: boolean) => void;
+}
+
+const AboutSection: React.FC<AboutSectionProps> = ({ onMenuStateChange }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
   const yearsExperience = new Date().getFullYear() - 2016;
@@ -21,6 +25,10 @@ const AboutSection = () => {
       setTimeout(() => setIsVisible(true), 0);
     }
   };
+
+  useEffect(() => {
+    onMenuStateChange?.(isVisible);
+  }, [isVisible, onMenuStateChange]);
 
   return (
     <div>
@@ -59,16 +67,20 @@ const AboutSection = () => {
             </h3>
             <p>
               With over {yearsExperience} years in the tech industry, I
-              currently lead a 9-person React Native engineering team at
-              Apiture. My toolkit includes Angular, Python, React Native, and
-              TypeScript, complemented by experience in cloud platforms like AWS
-              and OCI.
+              currently lead a 9-person React Native engineering team at a leading 
+              fintech startup. 
             </p>
             <p>
-              Previously at Oracle, I advanced from Associate Consultant to
+            I have built and shipped software and services for a variety of industries, including 
+            fintech, healthcare, and education. From release management to 
+            product development, I have experience in all aspects of the software development lifecycle
+            (and the Professional SCRUM Master&#8482; certification to prove it).
+            </p>
+            <p>
+              In my previous role, I advanced from Associate Consultant to
               Cloud Engineer, where I led migrations, delivered POCs, and
-              developed internal systems, including a skill-mapping website. My
-              work often focused on serverless and microservices architectures.
+              developed internal automation tools and dashboards. 
+              My work often focused on serverless and microservices architectures.
             </p>
             <p>
               Passionate about growth, I constantly explore new technologies and
