@@ -49,6 +49,7 @@ body {
   p {
     font-weight: $font-weight-regular;
     font-size: 0.9em;
+    line-height: 1.5;
   }
 
   ul {
@@ -260,6 +261,56 @@ body {
   }
 }
 
+.consulting {
+  transition: opacity 500ms ease-in-out;
+
+  &.show {
+    max-height: 2000px;
+  }
+
+  &.hide {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: $transition, visibility 0s linear 500ms;
+  }
+
+  h3 {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-weight: $font-weight-light;
+  }
+
+  h4 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-weight: $font-weight-light;
+    font-size: 1.1em;
+  }
+
+  ul {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+
+    li {
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      line-height: 1.4;
+    }
+  }
+
+  p {
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+
+  em {
+    font-style: italic;
+    color: $color-link;
+  }
+}
+
 .blob {
   position: fixed;
   opacity: 0.6;
@@ -269,6 +320,11 @@ body {
   filter: blur(40px);
   z-index: -1;
   background: linear-gradient(47deg, rgb(83 41 54) 21%, rgb(78 76 59) 67%, rgb(72 46 100) 81%);
+  transition: opacity 300ms ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+  }
 }
 
 @keyframes animate {
@@ -288,4 +344,14 @@ body {
     rotate: -60deg;
     scale: 1.05;
   }
+}
+
+.consulting__footer {
+  border-top: 1px solid $color-primary;
+  border-bottom: 1px solid $color-primary;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  font-size: 0.9em;
 }

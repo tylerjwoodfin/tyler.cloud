@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.scss";
@@ -73,7 +73,11 @@ const ContactForm = ({ onSuccess }: any) => {
   );
 };
 
-const ReachOutComponent = () => {
+interface ReachOutComponentProps {
+  onMenuStateChange?: (isExpanded: boolean) => void;
+}
+
+const ReachOutComponent: React.FC<ReachOutComponentProps> = ({ onMenuStateChange }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
@@ -85,6 +89,10 @@ const ReachOutComponent = () => {
       setIsVisible(false);
     }, 1500);
   };
+
+  useEffect(() => {
+    onMenuStateChange?.(isVisible);
+  }, [isVisible, onMenuStateChange]);
 
   return (
     <div>

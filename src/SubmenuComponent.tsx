@@ -18,11 +18,13 @@ interface Project {
 interface SubmenuComponentProps {
   title: string;
   customLinks?: Project[];
+  onMenuStateChange?: (isExpanded: boolean) => void;
 }
 
 const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
   title,
   customLinks,
+  onMenuStateChange,
 }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,6 +46,10 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
       setTimeout(() => setShowSubmenuContent(false), 500); // Match the transition duration
     }
   };
+
+  useEffect(() => {
+    onMenuStateChange?.(visible);
+  }, [visible, onMenuStateChange]);
 
   const handleSublinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -98,7 +104,7 @@ const SubmenuComponent: React.FC<SubmenuComponentProps> = ({
       }
     };
 
-    if (title === "latest side projects" && !hasFetchedLatest.current) {
+    if (title === "latest hobby projects" && !hasFetchedLatest.current) {
       getLatest();
       hasFetchedLatest.current = true;
     } else if (customLinks) {
