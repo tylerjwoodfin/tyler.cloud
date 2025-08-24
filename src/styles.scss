@@ -209,6 +209,13 @@ body {
   &__margin {
     margin-top: 20px;
   }
+
+  // Mobile-specific adjustments
+  @media (max-width: $media-breakpoint) {
+    &.visible {
+      margin-bottom: 80px;
+    }
+  }
 }
 
 .submenu {
@@ -263,9 +270,11 @@ body {
 
 .consulting {
   transition: opacity 500ms ease-in-out;
+  margin-bottom: 20px; // Add bottom margin to prevent overlap
 
   &.show {
     max-height: 2000px;
+    margin-bottom: 40px; // Increase margin when expanded
   }
 
   &.hide {
@@ -273,6 +282,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transition: $transition, visibility 0s linear 500ms;
+    margin-bottom: 20px; // Keep consistent margin when hidden
   }
 
   h3 {
@@ -308,6 +318,39 @@ body {
   em {
     font-style: italic;
     color: $color-link;
+  }
+
+  // Mobile-specific adjustments
+  @media (max-width: $media-breakpoint) {
+    &.show {
+      margin-bottom: 120px;
+    }
+    
+    h3 {
+      margin-top: 20px;
+      margin-bottom: 15px;
+    }
+
+    h4 {
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin-top: 10px;
+      margin-bottom: 15px;
+      padding-left: 15px;
+
+      li {
+        margin-bottom: 8px;
+        font-size: 0.85em;
+      }
+    }
+
+    p {
+      margin-bottom: 12px;
+      font-size: 0.85em;
+    }
   }
 }
 
