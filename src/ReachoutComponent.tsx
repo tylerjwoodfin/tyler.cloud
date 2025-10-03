@@ -3,12 +3,16 @@ import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.scss";
 
-const ContactForm = ({ onSuccess }: any) => {
+interface ContactFormProps {
+  onSuccess: () => void;
+}
+
+const ContactForm = ({ onSuccess }: ContactFormProps) => {
   const [message, setMessage] = useState("");
   const [contact, setContact] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, includeResumeRequest: boolean = false) => {
     e.preventDefault();
     try {
       const response = await fetch("/submit-feedback", {
@@ -16,7 +20,11 @@ const ContactForm = ({ onSuccess }: any) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message, contact }),
+        body: JSON.stringify({ 
+          message, 
+          contact,
+          includeResumeRequest 
+        }),
       });
   
       if (response.ok) {
@@ -41,7 +49,7 @@ const ContactForm = ({ onSuccess }: any) => {
               <textarea
                 id="input-message"
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
                 className="form-input"
               />
             </label>
@@ -53,18 +61,28 @@ const ContactForm = ({ onSuccess }: any) => {
                 type="text"
                 id="input-contact"
                 value={contact}
-                onChange={(e) => setContact(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setContact(e.target.value)}
                 className="form-input"
               />
             </label>
           </div>
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={!message || message.length < 4}
-          >
-            send
-          </button>
+          <div className="button-group">
+            <button
+              type="submit"
+              className="submit-button"
+              disabled={!message || message.length < 4}
+            >
+              send
+            </button>
+            <button
+              type="button"
+              className="submit-button resume-button"
+              disabled={!message || message.length < 4 || !contact.trim()}
+              onClick={(e) => handleSubmit(e, true)}
+            >
+              send and request resume
+            </button>
+          </div>
         </>
       ) : (
         <span className="thank-you-message">Thank you for your message.</span>
@@ -81,7 +99,7 @@ const ReachOutComponent: React.FC<ReachOutComponentProps> = ({ onMenuStateChange
   const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => {
-    setIsVisible((prevState) => !prevState);
+    setIsVisible((prevState: boolean) => !prevState);
   };
 
   const handleSuccess = () => {

@@ -9,20 +9,37 @@ export function onRequestPost(params: { request: Request; env: Env }) {
     params.request.json().then(function(data) {
       var message = data.message;
       var contact = data.contact;
+      var includeResumeRequest = data.includeResumeRequest;
 
       if (!message || message.length < 4) {
         resolve(new Response("Message too short", { status: 400 }));
         return;
       }
 
+      // If resume is requested but no contact info provided, return error
+      if (includeResumeRequest && (!contact || contact.trim().length === 0)) {
+        resolve(new Response("Contact information required for resume request", { status: 400 }));
+        return;
+      }
+
       var subject = "New Website Feedback";
-      var emailBody = [
+      if (includeResumeRequest) {
+        subject += " - Resume Request";
+      }
+
+      var emailBodyArray = [
         "Message:",
         message,
         "",
         "Contact Info:",
         contact || "Not provided"
-      ].join("\n").trim();
+      ];
+
+      if (includeResumeRequest) {
+        emailBodyArray.push("", "Resume Request: YES");
+      }
+
+      var emailBody = emailBodyArray.join("\n").trim();
 
       fetch("https://api.resend.com/emails", {
         method: "POST",
