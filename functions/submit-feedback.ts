@@ -7,6 +7,7 @@ export interface Env {
 export function onRequestPost(params: { request: Request; env: Env }) {
   return new Promise(function(resolve) {
     params.request.json().then(function(data) {
+      var customSubject = data.customSubject;
       var message = data.message;
       var contact = data.contact;
       var includeResumeRequest = data.includeResumeRequest;
@@ -22,7 +23,7 @@ export function onRequestPost(params: { request: Request; env: Env }) {
         return;
       }
 
-      var subject = "New Website Feedback";
+      var subject = customSubject || "New Website Feedback";
       if (includeResumeRequest) {
         subject += " - Resume Request";
       }
