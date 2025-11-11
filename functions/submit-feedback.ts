@@ -4,45 +4,44 @@ export interface Env {
   FEEDBACK_EMAIL_TO: string;
 }
 
-export function onRequestPost(params: { request: Request; env: Env }) {
-  return new Promise(function(resolve) {
-    params.request.json().then(function(data) {
-      var customSubject = data.customSubject;
-      var message = data.message;
-      var contact = data.contact;
-      var includeResumeRequest = data.includeResumeRequest;
+export async function onRequestPost(params: { request: Request; env: Env }) {
+  try {
+    const data = await params.request.json();
+    const customSubject = data.customSubject;
+    const message = data.message;
+    const contact = data.contact;
+    const includeResumeRequest = data.includeResumeRequest;
 
-      if (!message || message.length < 4) {
-        resolve(new Response("Message too short", { status: 400 }));
-        return;
-      }
+    if (!message || message.length < 4) {
+      return new Response("Message too short", { status: 400 });
+    }
 
-      // If resume is requested but no contact info provided, return error
-      if (includeResumeRequest && (!contact || contact.trim().length === 0)) {
-        resolve(new Response("Contact information required for resume request", { status: 400 }));
-        return;
-      }
+    // If resume is requested but no contact info provided, return error
+    if (includeResumeRequest && (!contact || contact.trim().length === 0)) {
+      return new Response("Contact information required for resume request", { status: 400 });
+    }
 
-      var subject = customSubject || "New Website Feedback";
-      if (includeResumeRequest) {
-        subject += " - Resume Request";
-      }
+    let subject = customSubject || "New Website Feedback";
+    if (includeResumeRequest) {
+      subject += " - Resume Request";
+    }
 
-      var emailBodyArray = [
-        "Message:",
-        message,
-        "",
-        "Contact Info:",
-        contact || "Not provided"
-      ];
+    const emailBodyArray = [
+      "Message:",
+      message,
+      "",
+      "Contact Info:",
+      contact || "Not provided"
+    ];
 
-      if (includeResumeRequest) {
-        emailBodyArray.push("", "Resume Request: YES");
-      }
+    if (includeResumeRequest) {
+      emailBodyArray.push("", "Resume Request: YES");
+    }
 
-      var emailBody = emailBodyArray.join("\n").trim();
+    const emailBody = emailBodyArray.join("\n").trim();
 
-      fetch("https://api.resend.com/emails", {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + params.env.RESEND_API_KEY,
@@ -54,21 +53,21 @@ export function onRequestPost(params: { request: Request; env: Env }) {
           subject: subject,
           text: emailBody,
         }),
-      }).then(function(res) {
-        if (!res.ok) {
-          return res.text().then(function(error) {
-            console.error("Resend error:", error);
-            resolve(new Response("Failed to send email", { status: 500 }));
-          });
-        }
-        resolve(new Response("Feedback received", { status: 200 }));
-      }).catch(function(error) {
-        console.error("Fetch error:", error);
-        resolve(new Response("Failed to send email", { status: 500 }));
       });
-    }).catch(function(error) {
-      console.error("JSON parse error:", error);
-      resolve(new Response("Invalid request", { status: 400 }));
-    });
-  });
+
+      if (!res.ok) {
+        const error = await res.text();
+        console.error("Resend error:", error);
+        return new Response("Failed to send email", { status: 500 });
+      }
+
+      return new Response("Feedback received", { status: 200 });
+    } catch (error) {
+      console.error("Fetch error:", error);
+      return new Response("Failed to send email", { status: 500 });
+    }
+  } catch (error) {
+    console.error("JSON parse error:", error);
+    return new Response("Invalid request", { status: 400 });
+  }
 }
