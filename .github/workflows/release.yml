@@ -13,14 +13,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-- name: Clone backend repository
-  env:
-    BACKEND_REPO_PATH: ${{ secrets.BACKEND_REPO_PATH }}
-    BACKEND_REPO: ${{ secrets.BACKEND_REPO }}
-  run: |
-    git config --global credential.helper store
-    echo "https://oauth2:${BACKEND_REPO_PATH}@${BACKEND_REPO%/*}" > ~/.git-credentials
-    git clone https://${BACKEND_REPO} ../backend
+    - name: Clone backend repository
+      env:
+        BACKEND_REPO_PATH: ${{ secrets.BACKEND_REPO_PATH }}
+        BACKEND_REPO: ${{ secrets.BACKEND_REPO }}
+      run: |
+        git config --global credential.helper store
+        echo "https://oauth2:${BACKEND_REPO_PATH}@${BACKEND_REPO%/*}" > ~/.git-credentials
+        git clone https://${BACKEND_REPO} ../backend
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
