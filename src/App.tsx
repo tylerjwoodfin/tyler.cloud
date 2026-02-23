@@ -4,7 +4,6 @@ import "./styles.scss";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import SubmenuComponent from "./SubmenuComponent";
 import AboutSection from "./AboutComponent";
-import ConsultingComponent from "./ConsultingComponent";
 import ReachoutComponent from "./ReachoutComponent";
 
 const App: React.FC = () => {
@@ -33,9 +32,6 @@ const App: React.FC = () => {
           <AboutSection onMenuStateChange={(isExpanded) => handleMenuStateChange(isExpanded, 'about')} />
         </li>
         <li className="link-with-icon">
-          <ConsultingComponent onMenuStateChange={(isExpanded) => handleMenuStateChange(isExpanded, 'consulting')} />
-        </li>
-        <li className="link-with-icon">
           <SubmenuComponent 
             title="latest hobby projects" 
             onMenuStateChange={(isExpanded) => handleMenuStateChange(isExpanded, 'projects')} 
@@ -61,6 +57,19 @@ const App: React.FC = () => {
             rel="noopener noreferrer"
           >
             linkedin
+            <FontAwesomeIcon
+              icon={faArrowUpRightFromSquare}
+              className="icon hidden"
+            />
+          </a>
+        </li>
+        <li className="link-with-icon">
+          <a
+            href="https://medium.com/@tyler.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            medium
             <FontAwesomeIcon
               icon={faArrowUpRightFromSquare}
               className="icon hidden"
