@@ -290,92 +290,6 @@ body {
   }
 }
 
-.consulting {
-  transition: opacity 500ms ease-in-out;
-  margin-bottom: 20px; // Add bottom margin to prevent overlap
-
-  &.show {
-    max-height: 2000px;
-    margin-bottom: 40px; // Increase margin when expanded
-  }
-
-  &.hide {
-    max-height: 0;
-    opacity: 0;
-    visibility: hidden;
-    transition: $transition, visibility 0s linear 500ms;
-    margin-bottom: 20px; // Keep consistent margin when hidden
-  }
-
-  h3 {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    font-weight: $font-weight-light;
-  }
-
-  h4 {
-    margin-top: 25px;
-    margin-bottom: 15px;
-    font-weight: $font-weight-light;
-    font-size: 1.1em;
-  }
-
-  ul {
-    margin-top: 15px;
-    margin-bottom: 20px;
-    padding-left: 20px;
-
-    li {
-      margin-bottom: 10px;
-      font-size: 0.9em;
-      line-height: 1.4;
-    }
-  }
-
-  p {
-    margin-bottom: 15px;
-    line-height: 1.5;
-  }
-
-  em {
-    font-style: italic;
-    color: $color-link;
-  }
-
-  // Mobile-specific adjustments
-  @media (max-width: $media-breakpoint) {
-    &.show {
-      margin-bottom: 120px;
-    }
-    
-    h3 {
-      margin-top: 20px;
-      margin-bottom: 15px;
-    }
-
-    h4 {
-      margin-top: 20px;
-      margin-bottom: 10px;
-    }
-
-    ul {
-      margin-top: 10px;
-      margin-bottom: 15px;
-      padding-left: 15px;
-
-      li {
-        margin-bottom: 8px;
-        font-size: 0.85em;
-      }
-    }
-
-    p {
-      margin-bottom: 12px;
-      font-size: 0.85em;
-    }
-  }
-}
-
 .blob {
   position: fixed;
   opacity: 0.6;
@@ -409,14 +323,4 @@ body {
     rotate: -60deg;
     scale: 1.05;
   }
-}
-
-.consulting__footer {
-  border-top: 1px solid $color-primary;
-  border-bottom: 1px solid $color-primary;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-  font-size: 0.9em;
 }
