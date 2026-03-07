@@ -26,12 +26,17 @@ export async function onRequestPost(params: { request: Request; env: Env }) {
       subject += " - Resume Request";
     }
 
+    const clientIp = params.request.headers.get("CF-Connecting-IP") ?? "Unknown";
+
     const emailBodyArray = [
       "Message:",
       message,
       "",
       "Contact Info:",
-      contact || "Not provided"
+      contact || "Not provided",
+      "",
+      "IP:",
+      clientIp
     ];
 
     if (includeResumeRequest) {
