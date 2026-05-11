@@ -28,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server:blackjack": "node server/pointing-blackjack.mjs",
-    "dev:blackjack": "concurrently -n web,sock -c blue,green \"BROWSER=none HOST=0.0.0.0 craco start\" \"npm run server:blackjack\""
+    "dev:blackjack": "concurrently -n web,sock -c blue,green \"PORT=3001 POINTING_BLACKJACK_PORT=3334 BROWSER=none HOST=0.0.0.0 craco start\" \"POINTING_BLACKJACK_PORT=3334 npm run server:blackjack\""
   },
   "eslintConfig": {
     "extends": [
