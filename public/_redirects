@@ -1,0 +1,4 @@
+# Pointing Showdown moved to its own site.
+/pointing-showdown    https://pointy.website/           301
+/pointing-showdown/   https://pointy.website/           301
+/pointing-showdown/*  https://pointy.website/:splat     301
