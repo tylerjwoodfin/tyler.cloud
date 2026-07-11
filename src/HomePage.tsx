@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles.scss";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
@@ -9,17 +9,39 @@ import ReachoutComponent from "./ReachoutComponent";
 const HomePage: React.FC = () => {
   const [expandedMenus, setExpandedMenus] = useState<Set<string>>(new Set());
 
-  const handleMenuStateChange = (isExpanded: boolean, menuId: string) => {
-    setExpandedMenus((prev) => {
-      const newSet = new Set(prev);
-      if (isExpanded) {
-        newSet.add(menuId);
-      } else {
-        newSet.delete(menuId);
-      }
-      return newSet;
-    });
-  };
+  const handleMenuStateChange = useCallback(
+    (isExpanded: boolean, menuId: string) => {
+      setExpandedMenus((prev) => {
+        const alreadyExpanded = prev.has(menuId);
+        if (isExpanded === alreadyExpanded) {
+          return prev;
+        }
+        const next = new Set(prev);
+        if (isExpanded) {
+          next.add(menuId);
+        } else {
+          next.delete(menuId);
+        }
+        return next;
+      });
+    },
+    []
+  );
+
+  const onAboutMenuStateChange = useCallback(
+    (isExpanded: boolean) => handleMenuStateChange(isExpanded, "about"),
+    [handleMenuStateChange]
+  );
+
+  const onProjectsMenuStateChange = useCallback(
+    (isExpanded: boolean) => handleMenuStateChange(isExpanded, "projects"),
+    [handleMenuStateChange]
+  );
+
+  const onReachoutMenuStateChange = useCallback(
+    (isExpanded: boolean) => handleMenuStateChange(isExpanded, "reachout"),
+    [handleMenuStateChange]
+  );
 
   const isAnyMenuExpanded = expandedMenus.size > 0;
 
@@ -29,16 +51,12 @@ const HomePage: React.FC = () => {
       <h1>Hi, I'm Tyler Woodfin.</h1>
       <ul className="app__links">
         <li className="link-with-icon">
-          <AboutSection
-            onMenuStateChange={(isExpanded) => handleMenuStateChange(isExpanded, "about")}
-          />
+          <AboutSection onMenuStateChange={onAboutMenuStateChange} />
         </li>
         <li className="link-with-icon">
           <SubmenuComponent
             title="latest hobby projects"
-            onMenuStateChange={(isExpanded) =>
-              handleMenuStateChange(isExpanded, "projects")
-            }
+            onMenuStateChange={onProjectsMenuStateChange}
           />
         </li>
         <li className="link-with-icon">
@@ -81,11 +99,7 @@ const HomePage: React.FC = () => {
           </a>
         </li>
         <li className="link-with-icon">
-          <ReachoutComponent
-            onMenuStateChange={(isExpanded) =>
-              handleMenuStateChange(isExpanded, "reachout")
-            }
-          />
+          <ReachoutComponent onMenuStateChange={onReachoutMenuStateChange} />
         </li>
       </ul>
     </div>

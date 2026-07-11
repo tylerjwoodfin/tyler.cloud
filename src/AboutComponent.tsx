@@ -67,24 +67,17 @@ const AboutSection: React.FC<AboutSectionProps> = ({ onMenuStateChange }) => {
             </h3>
             <p>
               With over {yearsExperience} years in the tech industry, I
-              currently lead a 9-person React Native engineering team at a leading 
-              fintech startup. 
+              currently lead a React Native engineering team.
             </p>
             <p>
-            I have built and shipped software and services for a variety of industries, including 
-            fintech, healthcare, and education. From release management to 
+            I've built and shipped software and services for a variety of industries, including 
+            fintech, healthcare, and education. From AI integrations to 
             product development, I have experience in all aspects of the software development lifecycle
-            (and the Professional SCRUM Master&#8482; certification to prove it).
-            </p>
-            <p>
-              In my previous role, I advanced from Associate Consultant to
-              Cloud Engineer, where I led migrations, delivered POCs, and
-              developed internal automation tools and dashboards. 
-              My work often focused on serverless and microservices architectures.
+            (including the degrees and certifications to prove it).
             </p>
             <p>
               Passionate about growth, I constantly explore new technologies and
-              methodologies to enhance both my team's and my personal skills.
+              methodologies to enhance my skills.
             </p>
           </div>
         </div>
