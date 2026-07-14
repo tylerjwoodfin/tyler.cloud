@@ -3,9 +3,6 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Engine, ISourceOptions } from "@tsparticles/engine";
 
-const BG_GRADIENT =
-  "linear-gradient(145deg, #1a1c24 0%, #12161f 48%, #0b1522 100%)";
-
 /** Interactive constellation particle background for the homepage. */
 const ConstellationBackground: React.FC = () => {
   const [init, setInit] = useState(false);
@@ -40,15 +37,18 @@ const ConstellationBackground: React.FC = () => {
 
   const particlesOptions = useMemo(
     (): ISourceOptions => ({
+      // Sized via CSS (.constellation-layer) for reliable iOS Safari coverage.
       fullScreen: {
-        enable: true,
-        zIndex: -1,
+        enable: false,
       },
       background: {
-        image: BG_GRADIENT,
+        color: {
+          value: "transparent",
+        },
       },
       fpsLimit: 120,
       interactivity: {
+        detectsOn: "window",
         events: {
           onHover: {
             enable: true,
@@ -106,15 +106,17 @@ const ConstellationBackground: React.FC = () => {
     []
   );
 
-  if (reduceMotion) {
-    return <div className="constellation-fallback" aria-hidden="true" />;
+  if (reduceMotion || !init) {
+    return <div className="constellation-layer" aria-hidden="true" />;
   }
 
-  if (!init) {
-    return <div className="constellation-fallback" aria-hidden="true" />;
-  }
-
-  return <Particles id="tyler-cloud-constellation" options={particlesOptions} />;
+  return (
+    <Particles
+      id="tyler-cloud-constellation"
+      className="constellation-layer"
+      options={particlesOptions}
+    />
+  );
 };
 
 export default ConstellationBackground;
