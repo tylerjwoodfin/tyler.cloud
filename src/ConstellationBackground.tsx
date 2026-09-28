@@ -3,9 +3,6 @@ import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import type { Engine, ISourceOptions } from "@tsparticles/engine";
 
-const BG_GRADIENT =
-  "linear-gradient(145deg, #1a1c24 0%, #12161f 48%, #0b1522 100%)";
-
 /** Interactive constellation particle background for the homepage. */
 const ConstellationBackground: React.FC = () => {
   const [init, setInit] = useState(false);
@@ -43,9 +40,6 @@ const ConstellationBackground: React.FC = () => {
       fullScreen: {
         enable: true,
         zIndex: -1,
-      },
-      background: {
-        image: BG_GRADIENT,
       },
       fpsLimit: 120,
       interactivity: {
@@ -106,13 +100,8 @@ const ConstellationBackground: React.FC = () => {
     []
   );
 
-  if (reduceMotion) {
-    return <div className="constellation-fallback" aria-hidden="true" />;
-  }
-
-  if (!init) {
-    return <div className="constellation-fallback" aria-hidden="true" />;
-  }
+  // The document background remains visible while loading or with reduced motion.
+  if (reduceMotion || !init) return null;
 
   return <Particles id="tyler-cloud-constellation" options={particlesOptions} />;
 };
