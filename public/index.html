@@ -5,13 +5,38 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/img/favicon.ico" />
     <link rel="preload" href="img/face.jpg" as="image" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Safari uses the document's solid color beyond the page viewport. -->
+    <style>
+      html {
+        --page-background: #0b1522;
+        min-height: 100%;
+        background-color: var(--page-background);
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+      .page-background {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        /* Both edges meet the color Safari extends behind its browser bars. */
+        background: var(--page-background) linear-gradient(
+          180deg,
+          var(--page-background) 0%,
+          #1a1c24 25%,
+          #12161f 60%,
+          var(--page-background) 100%
+        );
+      }
+    </style>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <meta name="theme-color" content="#222222" />
     <meta
       name="description"
       content="Tyler Woodfin is an experienced React Native engineer and team lead in San Francisco."
@@ -26,6 +51,7 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div class="page-background" aria-hidden="true"></div>
     <div id="root"></div>
   </body>
 </html>

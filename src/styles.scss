@@ -1,6 +1,5 @@
 $font-primary: "Source Sans Pro", sans-serif;
 $color-primary: #d8d8d8;
-$color-background: #1a1a1a;
 $color-link: darkorange;
 $color-black: black;
 $font-size-base: 30px;
@@ -15,21 +14,12 @@ $box-shadow-base: -14px 21px 28px -2px rgba(135, 135, 135, 0.34);
 $media-breakpoint: 768px;
 $transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
 
+// The document gradient is defined in index.html so it paints before React starts.
 body {
   font-family: $font-primary;
   color: $color-primary;
   font-size: $font-size-base;
-  background-color: $color-background;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.constellation-fallback {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(145deg, #1a1c24 0%, #12161f 48%, #0b1522 100%);
-  pointer-events: none;
+  background: transparent;
 }
 
 .app {
@@ -37,8 +27,15 @@ body {
   z-index: 1;
   width: 100%;
   min-height: 100vh;
+  min-height: 100lvh;
+  box-sizing: border-box;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 
   &__content {
+    position: relative;
+    z-index: 1;
+    display: flow-root;
     width: 50%;
     max-width: 600px;
     margin: auto;
